@@ -1,0 +1,15 @@
+{
+  "name": "codeeditor",
+  "description": "A React Code Editor component based on Draft.js",
+  "repository": "github.com/gpoesia/CodeEditor",
+  "keywords": ["ide", "code", "editor"],
+  "files": ["src/CodeEditor.js"],
+  "main": "src/CodeEditor",
+  "license": "MIT",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": ">=15",
+    "react-dom": ">=15",
+    "draft-js": "0.9.1"
+  }
+}

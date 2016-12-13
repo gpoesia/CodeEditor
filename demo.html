@@ -1,22 +1,3 @@
-# CodeEditor
-
-A generic React component for building customized code editors, based on Draft.js.
-
-# Demo
-
-[This simple C++ editor demo](http://gpoesia.com/random/codeeditor/demo.html).
-exercises all the capabilities of the component, which right now are:
-
-* Automatic indentation inside blocks (delimited by { and }); you can set the indent size.
-* Customizable syntax highlighting.
-* Automatically closing a block and starting a new line when the user opens a block (i.e. inserting a '}' automatically).
-* Passing a callback for when the code is changed.
-
-# Usage
-
-This is the entire code of the demo page:
-
-```html
 <!doctype html>
 <html>
   <head>
@@ -66,7 +47,7 @@ This is the entire code of the demo page:
           ],
           initialCode: ("#include <iostream>\n" +
                         "using namespace std;\n" +
-                        "int main(){\n" +
+                        "int main() {\n" +
                         "    cout << \"Hello, world!\" << endl;\n" +
                         "    return 0;\n" +
                         "}\n"),
@@ -81,20 +62,3 @@ This is the entire code of the demo page:
     <div id="editor"></div>
   </body>
 </html>
-```
-
-# Contributing
-
-There are a number of other features that could be added without much effort:
-
-* Line numbers
-* Support for other indentation rules (like Python's)
-* Generic block delimiters
-
-If you would like to implement any of these (or any other suggestions, of course),
-I'd be happy to review and merge your changes. Please create an issue stating
-what you would like to add and we can discuss it there.
-
-# License
-
-MIT. Basically, do anything you want provided you keep the copyright notice.
