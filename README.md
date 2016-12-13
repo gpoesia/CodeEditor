@@ -1,4 +1,4 @@
-# CodeEditor
+# CodeEditor [![npm version](https://img.shields.io/npm/v/codeeditor.svg?style=flat)](https://www.npmjs.com/package/codeeditor)
 
 A generic React component for building customized code editors, based on Draft.js.
 
