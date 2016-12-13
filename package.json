@@ -6,7 +6,7 @@
   "files": ["release/CodeEditor.js"],
   "main": "release/CodeEditor",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "react": ">=15",
     "react-dom": ">=15",

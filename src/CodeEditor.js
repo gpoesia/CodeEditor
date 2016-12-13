@@ -111,10 +111,8 @@ var CodeEditor = React.createClass({
 
   onChange: function(newState) {
     this.setState({state: newState});
-    console.log("onChange");
 
     if (this.props.parameters.onChange) {
-      console.log("Calling onChange");
       this.props.parameters.onChange(getCode(newState.getCurrentContent()));
     }
   },
@@ -224,7 +222,6 @@ var CodeEditor = React.createClass({
   },
 
   render: function() {
-    console.log("why");
     return <div style={this.props.parameters.style} onClick={this.focus}>
              <Editor editorState={this.state.state}
                      onChange={this.onChange}
