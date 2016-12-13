@@ -81,9 +81,9 @@ var CodeEditor = React.createClass({
 
       return function(contentBlock, callback) {
         var text = contentBlock.getText();
-        let matchArr, start = -1;
+        var matchArr = null;
         while ((matchArr = regex.exec(text)) !== null) {
-          start = matchArr.index;
+          var start = matchArr.index;
           callback(start, start + matchArr[0].length);
         }
       };
