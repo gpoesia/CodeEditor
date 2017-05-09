@@ -9,3 +9,5 @@ fi
 
 echo "Building release directory..."
 jsx src/ release/
+
+browserify -o bundle.js -s CodeEditor release/CodeEditor.js

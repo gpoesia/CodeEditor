@@ -69,6 +69,54 @@ var CodeEditor = React.createClass({
   },
 
   getInitialState: function() {
+    var editorState = EditorState.createWithContent(
+      ContentState.createFromText(
+        this.props.parameters.initialCode || ""));
+
+    var strategies = [];
+
+    // Given a range, returns a corresponding 'strategy' for CompositeDecorator:
+    // a function that calls its callback for the source code range.
+    function strategyForRange(beginLine, beginColumn, endLine, endColumn) {
+      var keysToRange = {};
+      var content = editorState.getCurrentContent();
+      var i = 0;
+
+      content.getBlockMap().forEach(function(block, blockKey) {
+        if (i >= beginLine && i <= endLine) {
+          if (beginLine == endLine) {
+            keysToRange[blockKey] = {begin: beginColumn, end: endColumn};
+          } else if (i == beginLine) {
+            keysToRange[blockKey] = {begin: beginColumn, end: block.getText().length};
+          } else if (i == endLine) {
+            keysToRange[blockKey] = {begin: 0, end: endColumn};
+          } else {
+            keysToRange[blockKey] = {begin: 0, end: block.getText().length};
+          }
+        }
+
+        i++;
+      });
+
+      return function(contentBlock, callback) {
+        var key = contentBlock.getKey();
+        if (keysToRange.hasOwnProperty(key)) {
+          callback(keysToRange[key].begin, keysToRange[key].end);
+        }
+      };
+    }
+
+    if (this.props.parameters.highlightingRanges) {
+      for (var i = 0; i < this.props.parameters.highlightingRanges.length; i++) {
+        var range = this.props.parameters.highlightingRanges[i];
+        strategies.push({
+          strategy: strategyForRange(range.beginLine, range.beginColumn,
+                                     range.endLine, range.endColumn),
+          component: createSpanWithStyle(range.style),
+        });
+      }
+    }
+
     // Given a regex, returns a corresponding 'strategy' for CompositeDecorator:
     // a function that calls its callback for all matches of the regex in
     // a block's content.
@@ -89,8 +137,6 @@ var CodeEditor = React.createClass({
       };
     }
 
-    var strategies = [];
-
     if (this.props.parameters.highlightingRules) {
       for (var i = 0; i < this.props.parameters.highlightingRules.length; i++) {
         var rule = this.props.parameters.highlightingRules[i];
@@ -102,10 +148,8 @@ var CodeEditor = React.createClass({
     }
 
     return {
-      state: EditorState.createWithContent(
-                 ContentState.createFromText(
-                   this.props.parameters.initialCode || ""),
-                 new CompositeDecorator(strategies)),
+      state: EditorState.set(editorState,
+                             {decorator: new CompositeDecorator(strategies)}),
     };
   },
 

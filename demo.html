@@ -23,6 +23,17 @@
           },
           autoIndent: true,
           autoCloseBlocks: true,
+          highlightingRanges: [
+            {
+              beginLine: 4,
+              beginColumn: 4,
+              endLine: 6,
+              endColumn: 6,
+              style: {
+                backgroundColor: 'yellow',
+              },
+            }
+          ],
           highlightingRules: [
             // Some keywords
             {
@@ -49,6 +60,9 @@
                         "using namespace std;\n" +
                         "int main() {\n" +
                         "    cout << \"Hello, world!\" << endl;\n" +
+                        "    /*\n" +
+                        "      This section is highlighted.\n" +
+                        "    */\n" +
                         "    return 0;\n" +
                         "}\n"),
           indentSize: 4,
