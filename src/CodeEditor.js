@@ -106,7 +106,9 @@ var CodeEditor = React.createClass({
       return function(contentBlock, callback) {
         var key = contentBlock.getKey();
         if (keysToRange.hasOwnProperty(key)) {
-          callback(keysToRange[key].begin, keysToRange[key].end);
+          callback(keysToRange[key].begin,
+                   Math.min(contentBlock.getText().length,
+                            keysToRange[key].end));
         }
       };
     }
@@ -156,8 +158,8 @@ var CodeEditor = React.createClass({
   },
 
   onChange: function(newState) {
-    this.setState({state: newState});
-
+    this.setState({state: newState,
+                   highlightingRanges: []});
     if (this.props.parameters.onChange) {
       this.props.parameters.onChange(getCode(newState.getCurrentContent()));
     }
