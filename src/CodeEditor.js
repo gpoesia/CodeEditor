@@ -72,7 +72,12 @@ var CodeEditor = React.createClass({
     var editorState = EditorState.createWithContent(
       ContentState.createFromText(
         this.props.parameters.initialCode || ""));
+    return {
+      state: editorState,
+    }
+  },
 
+  _getDecorator: function(editorState) {
     var strategies = [];
 
     // Given a range, returns a corresponding 'strategy' for CompositeDecorator:
@@ -147,10 +152,7 @@ var CodeEditor = React.createClass({
       }
     }
 
-    return {
-      state: EditorState.set(editorState,
-                             {decorator: new CompositeDecorator(strategies)}),
-    };
+    return new CompositeDecorator(strategies);
   },
 
   onChange: function(newState) {
@@ -266,8 +268,10 @@ var CodeEditor = React.createClass({
   },
 
   render: function() {
+    var state = EditorState.set(this.state.state,
+                                {decorator: this._getDecorator(this.state.state)});
     return <div style={this.props.parameters.style} onClick={this.focus}>
-             <Editor editorState={this.state.state}
+             <Editor editorState={state}
                      onChange={this.onChange}
                      handleReturn={this._handleReturn}
                      handleBeforeInput={this._handleBeforeInput}
